@@ -2,12 +2,71 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8">
-        <title>띠따따</title>
+        <title>ott 추천</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <header>
-            <h1>ㅇㅇㅇ</h1>
-        </header>
+        <h1>랜덤 OTT 콘텐츠 🎬</h1>
+        <h2>취향에 맞는 콘텐츠를 추천해 드려요!</h2>
+        <form id="ottForm">
+            <div class="form-group">
+                <label for="ott">OTT 선택</label>
+                <select id="ott" required>
+                    <option value="ott" required>선택하세요</option>
+                    <option value="ott" required>넷플릭스</option>
+                    <option value="ott" required>티빙</option>
+                    <option value="ott" required>왓챠</option>
+                    <option value="ott" required>쿠팡플레이</option>
+                </select>
+            </div>
+
+                <div class="form-group">
+                    <label for="genre">장르 선택</label>
+                    <select id="genre" required>
+                        <option value="">선택하세요</option>
+                        <option value="액션">액션</option>
+                        <option value="로맨스">로맨스</option>
+                        <option value="코미디">코미디</option>
+                        <option value="스릴러">스릴러</option>
+                        <option value="다큐">다큐</option>
+                </select>
+                </div>
+
+            <button type="submit">결과</button>
+        </form>
+
+        <div id="result" class="result-box"></div>
+        <script>
+        const form = document.getElementById("ottForm");
+        const resultBox = document.getElementById("result");
+
+        form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+            const ott = document.getElementById("ott").value;
+            const genre = document.getElementById("genre").value;
+
+      try {
+        const response = await fetch("https://assign2-snowy.vercel.app/api/duksungAI", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ott, genre }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          resultDiv.textContent = data.answer;
+        } else {
+          resultDiv.textContent = `오류: ${data.error}`;
+        }
+      } catch (err) {
+        resultBox.textContent = "서버와 통신 중 오류가 발생했습니다.";
+        console.error(err);
+      }
+    });
+        </script>
     </body>
-    </html>
+</html>
