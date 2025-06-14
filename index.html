@@ -58,9 +58,9 @@
         const data = await response.json();
 
         if (response.ok) {
-          resultDiv.textContent = data.answer;
+          resultBox.textContent = data.answer;
         } else {
-          resultDiv.textContent = `오류: ${data.error}`;
+          resultBox.textContent = `오류: ${data.error}`;
         }
       } catch (err) {
         resultBox.textContent = "서버와 통신 중 오류가 발생했습니다.";
